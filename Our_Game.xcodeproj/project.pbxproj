@@ -35,16 +35,6 @@
 			path = Our_Game;
 			sourceTree = "<group>";
 		};
-		98420E632DC40A1900C1CF53 /* Our_GameTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Our_GameTests;
-			sourceTree = "<group>";
-		};
-		98420E6D2DC40A1900C1CF53 /* Our_GameUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Our_GameUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				98420E522DC40A1800C1CF53 /* Our_Game */,
-				98420E632DC40A1900C1CF53 /* Our_GameTests */,
-				98420E6D2DC40A1900C1CF53 /* Our_GameUITests */,
 				98420E512DC40A1800C1CF53 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				98420E622DC40A1900C1CF53 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				98420E632DC40A1900C1CF53 /* Our_GameTests */,
-			);
 			name = Our_GameTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +137,6 @@
 			);
 			dependencies = (
 				98420E6C2DC40A1900C1CF53 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				98420E6D2DC40A1900C1CF53 /* Our_GameUITests */,
 			);
 			name = Our_GameUITests;
 			packageProductDependencies = (
