@@ -11,6 +11,8 @@ import SwiftUI
 extension Color {
     static let centerColor = Color(hex: "#07A5C3")
     static let edgeColor = Color(hex: "#2F6386")
+    static let orangeBlock = Color(hex: "#F4B324")
+    static let yellowBlock = Color(hex: "#FFD500")
     
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

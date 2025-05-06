@@ -1,56 +1,192 @@
 import SwiftUI
 
+struct Player: Identifiable {
+    let id = UUID()
+    let rank: Int
+    var name: String?
+}
+
 struct LeaderBoard: View {
+    @State private var players: [Player] = []
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
-        ZStack {
-            // الخلفية
-            RadialGradient(
-                gradient: Gradient(colors: [.centerColor, .edgeColor]),
-                center: .center,
-                startRadius: 20,
-                endRadius: 500
-            )
-            .ignoresSafeArea()
-            
-            VStack {
-                Text("لوحة الفائزين")
-                    .font(.custom("SF Arabic Rounded", size: 30))
-                    .foregroundColor(.white)
-                    .bold()
-                    .padding(.top, 40) // نزّل النص تحت شوي
-                
-                Spacer()
-            }
-            .padding()
-            
-            // المربع البرتقالي
-            VStack {
-                Spacer()
-                HStack {
-                    // المربع البرتقالي على اليسار
-                    Rectangle()
-                        .fill(Color(hex: "F4B324"))
-                        .frame(width: 130, height: 130)
-                    
-                    // المربع باللون FFD500 على اليمين
-                    Rectangle()
-                        .fill(Color(hex: "FFD500"))
-                        .frame(width: 65, height: 130) // نصف الحجم بالضبط
+        GeometryReader { geometry in
+            ZStack {
+                // الخلفية
+                RadialGradient(
+                    gradient: Gradient(colors: [.centerColor, .edgeColor]),
+                    center: .center,
+                    startRadius: 20,
+                    endRadius: 500
+                )
+                .ignoresSafeArea()
+
+                // العنوان
+                VStack {
+                    HStack {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.white)
+                                .padding(.trailing, 85)
+                        }
+
+                        Text("لوحة الفائزين")
+                            .font(.custom("SF Arabic Rounded", size: 30))
+                            .foregroundColor(.white)
+                            .bold()
+
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+
+                    Spacer()
                 }
-                .padding(.bottom, 420) // المسافة بين المربعات والجزء الأبيض
-            }
-            
-            // المربع الأبيض في أسفل الشاشة
-            VStack {
-                Spacer() // يدفع المستطيل لتحت
-                
-                RoundedRectangle(cornerRadius: 50, style: .continuous)
-                    .fill(Color.white)
-                    .frame(height: 400)
-                    .ignoresSafeArea(edges: .bottom) // يظل المربع الأبيض في أسفل الشاشة
+
+                // كل المحتوى السفلي
+                VStack(spacing: 10) {
+                    // المراكز 1-3
+                    HStack(alignment: .bottom, spacing: 0) {
+                        if let player = players.first(where: { $0.rank == 2 }) {
+                            playerColumn(player: player, height: 170, rank: "2")
+                        }
+
+                        if let player = players.first(where: { $0.rank == 1 }) {
+                            VStack(spacing: 10) {
+                                VStack(spacing: 4) {
+                                    Image("crown")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 40, height: 40)
+
+                                    Text(player.name ?? "الجوهرة")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                }
+
+                                columnBlock(height: 230, rank: "1")
+                            }
+                        }
+
+                        if let player = players.first(where: { $0.rank == 3 }) {
+                            playerColumn(player: player, height: 130, rank: "3")
+                        }
+                    }
+
+                    // المربع الأحمر
+                    Rectangle()
+                        .fill(Color.red)
+                        .frame(width: 350, height: 3)
+                        .padding(.top, -10)
+
+                    // الجزء الأبيض
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 50, style: .continuous)
+                            .fill(Color.white)
+                            .frame(height: 400)
+                            .ignoresSafeArea(edges: .bottom)
+
+                        ScrollView {
+                            VStack(spacing: 10) {
+                                ForEach(players.filter { $0.rank >= 4 && $0.rank <= 10 }) { player in
+                                    HStack {
+                                        Image("rank")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50, height: 50)
+                                            .padding(.leading, 10)
+
+                                        Text(player.name ?? "الجوهرة")
+                                            .font(.headline)
+                                            .foregroundColor(.black)
+                                            .padding(.leading, 180)
+
+                                        Spacer()
+
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .fill(Color.orangeBlock)
+                                                .frame(width: 60, height: 60)
+
+                                            Text("\(player.rank)")
+                                                .font(.title)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                        }
+                                        .padding(.trailing, 20)
+                                    }
+                                    .offset(y: -50)
+                                }
+                            }
+                            .padding(.top, 50)
+                        }
+                        .frame(height: 300)
+                    }
+                }
+                .frame(width: geometry.size.width)
+                .position(x: geometry.size.width / 2, y: geometry.size.height - 300)
             }
         }
-        .ignoresSafeArea()
+        .onAppear {
+            fetchPlayers()
+        }
+    }
+
+    func playerColumn(player: Player, height: CGFloat, rank: String) -> some View {
+        VStack(spacing: 10) {
+            Text(player.name ?? "الجوهرة")
+                .font(.headline)
+                .bold()
+                .foregroundColor(.white)
+
+            columnBlock(height: height, rank: rank)
+        }
+    }
+
+    func columnBlock(height: CGFloat, rank: String) -> some View {
+        VStack(spacing: 0) {
+            // ✅ المربع فوق العمود
+            Rectangle()
+                .fill(Color.red) // بإمكانك تغييره لأي لون تبينه
+                .frame(width: 110, height: 3)
+
+            ZStack(alignment: .top) {
+                HStack(spacing: 0) {
+                    Rectangle()
+                        .fill(Color.orangeBlock)
+                        .frame(width: 55, height: height)
+                    Rectangle()
+                        .fill(Color.yellowBlock)
+                        .frame(width: 55, height: height)
+                }
+                Text(rank)
+                    .font(.title)
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding(.top, 30)
+            }
+        }
+    }
+
+    func fetchPlayers() {
+        players = [
+            Player(rank: 1, name: "norah"),
+            Player(rank: 2, name: nil),
+            Player(rank: 3, name: "soso"),
+            Player(rank: 4, name: nil),
+            Player(rank: 5, name: nil),
+            Player(rank: 6, name: nil),
+            Player(rank: 7, name: nil),
+            Player(rank: 8, name: nil),
+            Player(rank: 9, name: nil),
+            Player(rank: 10, name: nil)
+        ]
     }
 }
 
