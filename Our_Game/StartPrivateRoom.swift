@@ -1,3 +1,4 @@
+
 import SwiftUI
 
 struct RoomCreatedView: View {
@@ -143,7 +144,7 @@ struct PlayerCircle: View {
                 .frame(width: 90, height: 70)
 
             if player.isWaiting {
-                Image("waited")
+                Image("Waited")
                     .resizable()
                     .renderingMode(.template)
                     .foregroundColor(.white)
