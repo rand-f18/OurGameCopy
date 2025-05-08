@@ -57,6 +57,8 @@ struct WinnerView: View {
 
                         HStack(spacing: 8) {
                             Image("coins")
+                                .resizable()
+                                    .frame(width: 25, height: 25)
                             Text("\(winner.score)")
                                 .foregroundColor(Color(hex: "FFD500"))
                                 .bold()
@@ -147,6 +149,9 @@ struct WinnerView: View {
                     ZStack {
                         HStack(spacing: 6) {
                             Image("coins")
+                                .resizable()
+                                    .frame(width: 25, height: 25)
+                            
                             Text("\(player.score)")
                                 .foregroundColor(Color(hex: "FFD500"))
                                 .bold()
