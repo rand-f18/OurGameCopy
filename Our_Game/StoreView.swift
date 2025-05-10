@@ -113,7 +113,7 @@ struct StoreView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.white)
-                        .frame(width: 74, height: 80)
+                        .frame(width: 70, height: 80)
                     
                     Image(imageName)
                         .resizable()
