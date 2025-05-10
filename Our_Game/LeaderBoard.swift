@@ -30,6 +30,7 @@ struct LeaderBoard: View {
                         }) {
                             Image(systemName: "chevron.backward")
                                 .resizable()
+                                .bold()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
                                 .foregroundColor(.white)

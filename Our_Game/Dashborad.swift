@@ -9,6 +9,9 @@ struct DashboardView: View {
         levelPoints / maxPoints
     }
     
+    @State private var showHelpSheet = false
+    @State private var selectedPage = 0
+
     var body: some View {
         ZStack {
             // Background gradient
@@ -26,7 +29,11 @@ struct DashboardView: View {
                 // MARK: - Top Stats
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 16) {
+<<<<<<< HEAD
                         // Level + Progress
+=======
+                        // Level circle and progress bar
+>>>>>>> main
                         HStack(spacing: 12) {
                             ZStack {
                                 Circle()
@@ -79,6 +86,7 @@ struct DashboardView: View {
                     
                     Spacer()
                     
+<<<<<<< HEAD
                     // Right Side Icons (reordered to match the image)
                     VStack(spacing: 5) {
                         HStack(spacing: 12) {
@@ -103,6 +111,24 @@ struct DashboardView: View {
                                     .resizable()
                                     .frame(width: 40, height: 40)
                             }
+=======
+                    // MARK: - Right Side Icons
+                    Button(action: {
+                        print("Card tapped")
+                    }) {
+                        Image("card_16271793")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                    }
+                    
+                    VStack(spacing: 12) {
+                        Button(action: {
+                            print("Store tapped")
+                        }) {
+                            Image("store_869636")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+>>>>>>> main
                         }
                         
                         // Ghost and score
@@ -119,7 +145,7 @@ struct DashboardView: View {
                                 .foregroundColor(.white)
 
                             Button(action: {
-                                print("Help tapped")
+                                showHelpSheet = true
                             }) {
                                 HStack(spacing: 4) {
                                     
@@ -146,7 +172,10 @@ struct DashboardView: View {
                 
                 Spacer()
                 
+<<<<<<< HEAD
                 // MARK: - Game Preview + Buttons
+=======
+>>>>>>> main
                 VStack(spacing: -19) {
                     Image("Preview")
                         .resizable()
@@ -181,7 +210,69 @@ struct DashboardView: View {
                 Spacer()
             }
             .padding()
+            
+            // ✅ البوب-أب مع ٤ صفحات ومؤشر Apple الرسمي
+            if showHelpSheet {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                VStack {
+                    ZStack(alignment: .topTrailing) {
+                        TabView(selection: $selectedPage) {
+                            ForEach(0..<4) { index in
+                                helpPage(index: index)
+                                    .tag(index)
+                            }
+                        }
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                        .frame(width: 330, height: 390)
+                        .background(Color(#colorLiteral(red: 0.0, green: 0.58, blue: 0.74, alpha: 1)))
+                        .cornerRadius(25)
+                        .shadow(radius: 10)
+                        
+                        Button(action: {
+                            showHelpSheet = false
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.white)
+                                .font(.title2)
+                        }
+                        .padding(10)
+                    }
+                }
+                .transition(.scale)
+            }
         }
+    }
+    
+    func helpPage(index: Int) -> some View {
+        let titles = ["كيفية اللعب", "خلّك قريب من أصحابك", "في بداية اللعب", "الأكشن كاردز"]
+        let descriptions = [
+            "اجمع شبحك، وافتح عيونك! تقدر تعرف عدد أوراق خصمك وتخطط بذكاء",
+            "وادخلوا الغرفة كفريق واحد — التحدي يبدأ لما تكونون مجتمعين!",
+            "في بداية اللعب، كل لاعب راح يحصل على 12 ورقة. الهدف؟ خلّص أوراقك بأسرع ما يمكن! أول لاعب يخلّص أوراقه يحجز المركز الأول، والبقية يتنافسون على باقي المراكز حسب الترتيب",
+            "اختر بطاقتين(اكشن كاردز) قبل ما تبدأ اللعب… قراراتك الآن ممكن تغيّر مجرى الجولة! وبعد ما تلعب 6 أوراق، اللعبة تتغير — عندك 3 ثواني بس تختار بسرعة وحدة من بطاقتك، وتوجّهها للخصم المناسب. لحظة وحدة ممكن ترفعك أو تطيحك!"
+        ]
+        let images = ["ghost_4955533 (1)", "table", "places", "card_16271793"]
+
+        return VStack(spacing: 16) {
+            Text(titles[index])
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
+            
+            Text(descriptions[index])
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.white)
+                .padding(.horizontal)
+            
+            Image(images[index])
+                .resizable()
+                .scaledToFit()
+                .frame(width: 120, height: 150)
+        }
+        .padding()
     }
 }
 
