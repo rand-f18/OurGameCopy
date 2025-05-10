@@ -11,9 +11,9 @@ struct ActionCard: Identifiable {
 struct MyCardsView: View {
     
     let actionCards: [ActionCard] = [
-        ActionCard(image: "freeze_card", count: 1, label: "تجميد", description: "تجميد الخصم لمدة ٦ ثواني"),
-        ActionCard(image: "duplicate_card", count: 1, label: "تكرار", description: "\n"),
-        ActionCard(image: "protection_card", count: 2, label: "حماية", description: "\n"), ActionCard(image: "protection_card", count: 2, label: "حماية", description: "\n"),ActionCard(image: "duplicate_card", count: 1, label: "تكرار", description: "\n")
+        ActionCard(image: "Group2", count: 1, label: "تجميد", description: "تجميد الخصم لمدة ٦ ثواني"),
+        ActionCard(image: "Group4", count: 1, label: "تكرار", description: "\n"),
+        ActionCard(image: "Group5", count: 2, label: "حماية", description: "\n"), ActionCard(image: "Group5", count: 2, label: "حماية", description: "\n"),ActionCard(image: "Group4", count: 1, label: "تكرار", description: "\n")
         
     ]
     

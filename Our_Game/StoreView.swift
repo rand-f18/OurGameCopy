@@ -54,13 +54,14 @@ struct StoreView: View {
                             .foregroundColor(Color(red: 0.227, green: 0.431, blue: 0.647))
                             .padding(.trailing)
                         
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                            StoreCard(title: "Protection", icon: "shield", price: "7500", duration: "2.80s", description: "حماية من إحدى بطاقات الخصم", color: .gray)
-                            StoreCard(title: "+2", icon: "square.on.square", price: "7500", duration: "2.80s", description: "أضف ورقتين إضافية لأحد الأطراف", color: .gray)
-                            StoreCard(title: "Noise", icon: "waveform", price: "7500", duration: "2.80s", description: "تشويش لمدة ١٠ ثواني لأحد الأطراف", color: .gray)
-                            StoreCard(title: "Freeze!", icon: "snowflake", price: "7500", duration: "2.80s", description: "تجميد لمدة ٦ ثواني لأحد الأطراف", color: .gray)
-                            StoreCard(title: "Peek", icon: "eye", price: "10K", duration: "5.80s", description: "استرق النظر قبل الجميع", color: .gray)
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                            StoreCard(title: "Protection", imageName: "Group5", price: "7500", dollar: "2.80$", description: "حماية من إحدى بطاقات الخصم", color: .gray)
+                            StoreCard(title: "+2", imageName: "Group4", price: "7500", dollar: "2.80$", description: "أضف ورقتين إضافية لأحد الأطراف", color: .gray)
+                            StoreCard(title: "Noise", imageName: "Group3", price: "7500", dollar: "2.80$", description: "تشويش لمدة ١٠ ثواني لأحد الأطراف", color: .gray)
+                            StoreCard(title: "Freeze!", imageName: "Group2", price: "7500", dollar: "2.80$", description: "تجميد لمدة ٦ ثواني لأحد الأطراف", color: .gray)
+                            StoreCard(title: "Peek", imageName: "Group1", price: "10K", dollar: "5.80$", description: "استرق النظر قبل الجميع", color: .gray)
                         }
+
                     }
                     .padding()
                     
@@ -73,12 +74,13 @@ struct StoreView: View {
                             .padding(.trailing)
                         
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                            StoreCard(title: "Protection", icon: "shield.fill", price: "90K", duration: "10s", description: "حماية من أي بطاقة طوال الجولة !", color: .red)
-                            StoreCard(title: "+15", icon: "square.on.square", price: "90K", duration: "10s", description: "أضف 15 ورقة إضافية لأحد الأطراف", color: .blue)
-                            StoreCard(title: "Noise", icon: "waveform", price: "90K", duration: "10s", description: "تشويش لمدة دقيقة لأحد الأطراف", color: .yellow)
-                            StoreCard(title: "Freeze!", icon: "snowflake", price: "90K", duration: "10s", description: "تجميد لمدة ٣٠ ثانية لأحد الأطراف", color: .blue)
-                            StoreCard(title: "👻", icon: "", price: "10K", duration: "5.80s", description: "اكشف عدد البطاقات في يد كل خصم دون رؤية محتواها", color: .cyan)
+                            StoreCard(title: "Protection", imageName: "Group5", price: "90K", dollar: "10$", description: "حماية من أي بطاقة طوال الجولة !", color: .red)
+                            StoreCard(title: "+15", imageName: "Group4", price: "90K", dollar: "10$", description: "أضف 15 ورقة إضافية لأحد الأطراف", color: .blue)
+                            StoreCard(title: "Noise", imageName: "Group3", price: "90K", dollar: "10$", description: "تشويش لمدة دقيقة لأحد الأطراف", color: .yellow)
+                            StoreCard(title: "Freeze!", imageName: "Group2", price: "90K", dollar: "10$", description: "تجميد لمدة ٣٠ ثانية لأحد الأطراف", color: .blue)
+                            StoreCard(title: "👻", imageName: "Group1", price: "10K", dollar: "5.80$", description: "اكشف عدد البطاقات في يد كل خصم دون رؤية محتواها", color: .cyan)
                         }
+
                     }
                     .padding()
                     .background(
@@ -99,52 +101,82 @@ struct StoreView: View {
     // MARK: - StoreCard View
     struct StoreCard: View {
         var title: String
-        var icon: String
+        var imageName: String
         var price: String
-        var duration: String
+        var dollar: String
         var description: String
         var color: Color
-        
+
         var body: some View {
-            VStack(spacing: 8) {
+            VStack(spacing: 12) {
+                // صورة الأيقونة داخل مربع أبيض
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: 12)
                         .fill(Color.white)
-                        .frame(height: 130)
+                        .frame(width: 75, height: 80)
                     
-                    VStack(spacing: 6) {
-                        if !icon.isEmpty {
-                            Image(systemName: icon)
-                                .font(.system(size: 30))
-                                .foregroundColor(color)
-                        } else {
-                            Text(title)
-                                .font(.system(size: 30))
-                        }
-                        
-                        Text(title)
-                            .foregroundColor(.black)
-                            .font(.headline)
-                    }
+                    Image(imageName)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 70, height: 70)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                
-                HStack(spacing: 4) {
+
+
+                // الاسم
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.black)
+
+                // السعر بالذهب داخل خلفية صفراء
+                HStack(spacing: 6) {
                     Text(price)
                         .font(.subheadline)
                         .foregroundColor(.black)
-                    
-                    Image(systemName: "creditcard")
-                        .foregroundColor(.yellow)
+                    Image("coins")
+                        .resizable()
+                        .frame(width: 20, height: 20)
                 }
-                
-                Text(duration)
-                    .font(.caption)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.yellow.opacity(0.8))
+                .cornerRadius(10)
+
+                // "أو اشتر مقابل"
+                Text("أو اشتر مقابل")
+                    .font(.caption2)
                     .foregroundColor(.gray)
-                
+
+                // السعر بالدولار داخل مستطيل أزرق غامق
+                Text(dollar)
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 6)
+                    .background(Color(red: 0.23, green: 0.36, blue: 0.53))
+                    .cornerRadius(8)
+
+                // الوصف داخل شريط أبيض
                 Text(description)
                     .font(.caption2)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 4)
+                    .padding(8)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(10)
+
+                // زر شراء
+                Button(action: {
+                    print("تم شراء البطاقة: \(title)")
+                }) {
+                    Text("شراء")
+                        .font(.footnote)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 6)
+                        .background(color)
+                        .cornerRadius(10)
+                }
             }
             .padding()
             .background(Color.white.opacity(0.7))
@@ -152,6 +184,9 @@ struct StoreView: View {
             .shadow(radius: 2)
         }
     }
+
+
+
     
     // MARK: - Preview
     struct StoreView_Previews: PreviewProvider {
@@ -159,4 +194,8 @@ struct StoreView: View {
             StoreView()
         }
     }
+}
+
+#Preview {
+    StoreView()
 }
