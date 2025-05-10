@@ -2,7 +2,6 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    // MARK: - Dynamic level progress
     @State private var levelPoints: Double = 250
     private let maxPoints: Double = 500
     
@@ -24,11 +23,10 @@ struct DashboardView: View {
             .ignoresSafeArea()
             
             VStack {
-                // MARK: - Top Stats Section
+                // MARK: - Top Stats
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 16) {
-                        
-                        // Level circle and progress bar
+                        // Level + Progress
                         HStack(spacing: 12) {
                             ZStack {
                                 Circle()
@@ -40,6 +38,7 @@ struct DashboardView: View {
                                     .foregroundColor(.blue)
                                     .fontWeight(.bold)
                             }
+                            
                             VStack(alignment: .leading, spacing: 6) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 20)
@@ -71,7 +70,7 @@ struct DashboardView: View {
                                     .background(Color.yellow)
                                     .cornerRadius(30)
                                 
-                                Image("coins") // Replace with your actual asset name
+                                Image("coins")
                                     .resizable()
                                     .frame(width: 30, height: 30)
                             }
@@ -80,24 +79,33 @@ struct DashboardView: View {
                     
                     Spacer()
                     
-                    // MARK: - Right Side Icons
-                 
-                        Button(action: {
-                            print("Card tapped")
-                        }) {
-                            Image("card_16271793")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                        }
-                    VStack(spacing: 12) {
-                        Button(action: {
-                            print("Store tapped")
-                        }) {
-                            Image("store_869636")
-                                .resizable()
-                                .frame(width: 40, height: 40)
+                    // Right Side Icons (reordered to match the image)
+                    VStack(spacing: 5) {
+                        HStack(spacing: 12) {
+                            Button(action: {
+                                print("Winner tapped")
+                            }) {
+                                Image("winner")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
+                            Button(action: {
+                                print("Card tapped")
+                            }) {
+                                Image("card_16271793")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
+                            Button(action: {
+                                print("leaderboard tapped")
+                            }) {
+                                Image("store_869636")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
                         }
                         
+                        // Ghost and score
                         VStack(spacing: 5) {
                             Button(action: {
                                 print("Ghost tapped")
@@ -106,23 +114,25 @@ struct DashboardView: View {
                                     .resizable()
                                     .frame(width: 40, height: 40)
                             }
-                            
+
                             Text("0")
                                 .foregroundColor(.white)
-                            
+
                             Button(action: {
                                 print("Help tapped")
                             }) {
                                 HStack(spacing: 4) {
+                                    
                                     Text("تعلم كيفية اللعب")
                                         .foregroundColor(.yellow)
                                         .font(.footnote)
                                         .lineLimit(1)
-                                    Spacer()
                                     Image(systemName: "questionmark.circle.fill")
                                         .foregroundColor(.yellow)
                                         .font(.footnote)
+
                                 }
+                                .frame(width: 140, alignment: .trailing)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 4)
                                 .background(Color.cyan.opacity(0.3))
@@ -130,12 +140,13 @@ struct DashboardView: View {
                             }
                         }
                     }
+
                 }
                 .padding(.horizontal)
                 
                 Spacer()
                 
-                // MARK: - Game Card & Buttons
+                // MARK: - Game Preview + Buttons
                 VStack(spacing: -19) {
                     Image("Preview")
                         .resizable()
@@ -149,13 +160,12 @@ struct DashboardView: View {
                         Text("إبدأ اللعب !")
                             .font(.title2)
                             .foregroundColor(.red)
-                            .frame(maxWidth: .infinity)
-                            .padding()
+                            .frame(width: 340, height: 55)
                             .background(Color.yellow)
                             .cornerRadius(25)
                     }
-                    
                 }
+                
                 Button(action: {
                     print("Create Private Room tapped")
                 }) {
@@ -166,7 +176,6 @@ struct DashboardView: View {
                         .background(Color(#colorLiteral(red: 0.0, green: 0.741, blue: 0.839, alpha: 1)))
                         .cornerRadius(30)
                 }
-
                 .padding(.horizontal, 30)
                 
                 Spacer()
@@ -181,4 +190,3 @@ struct DashboardView_Previews: PreviewProvider {
         DashboardView()
     }
 }
-
