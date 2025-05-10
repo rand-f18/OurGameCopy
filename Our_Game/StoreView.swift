@@ -10,155 +10,153 @@ struct StoreView: View {
                 endPoint: .bottom
             )
             .ignoresSafeArea()
-
+            
             ScrollView {
                 VStack(spacing: 10) {
-                    // Header
                     Text("متجر عين")
                         .font(.system(size: 36, weight: .bold))
                         .foregroundColor(Color(red: 0.227, green: 0.431, blue: 0.647))
-
-                    HStack(spacing: 8) {
-                        Text("25000")
-                            .font(.title3)
-                            .foregroundColor(.black)
-                            .padding(.vertical, 10)
-
-                        Image("coins")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 4)
-                    .background(Color.white.opacity(0.7))
-                    .clipShape(Capsule())
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                }
-                .padding(.top, 20)
-
-                // Cards
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                    ForEach(0..<10) { index in
-                        let isBasic = index < 5
-                        StoreCard(
-                            index: index,
-                            title: isBasic ? ["Protection", "+2", "Noise", "Freeze!", "Peek"][index] : ["Protection", "+15", "Noise", "Freeze!", "👻"][index - 5],
-                            icon: isBasic ? ["shield", "square.on.square", "waveform", "snowflake", "eye"][index] : ["shield.fill", "square.on.square", "waveform", "snowflake", ""][index - 5],
-                            price: isBasic ? "7500" : "90K",
-                            duration: isBasic ? "2.80s" : "10s",
-                            description: isBasic ?
-                                ["حماية من إحدى بطاقات الخصم", "أضف ورقتين إضافية لأحد الأطراف", "تشويش لمدة ١٠ ثواني لأحد الأطراف", "تجميد لمدة ٦ ثواني لأحد الأطراف", "استرق النظر قبل الجميع"][index]
-                                :
-                                ["حماية من أي بطاقة طوال الجولة !", "أضف 15 ورقة إضافية لأحد الأطراف", "تشويش لمدة دقيقة لأحد الأطراف", "تجميد لمدة ٣٠ ثانية لأحد الأطراف", "اكشف عدد البطاقات في يد كل خصم دون رؤية محتواها"][index - 5]
+                    HStack {
+                        Spacer() // يدفع المحتوى إلى اليمين
+                        
+                        HStack(spacing: 8) {
+                            Text("25000")
+                                .font(.title3)
+                                .foregroundColor(.black)
+                                .padding(.vertical, 6)
+                            
+                            Image("coins")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                                .alignmentGuide(.firstTextBaseline) { $0[.bottom] }
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 4)
+                        .background(Color.white.opacity(0.7))
+                        .clipShape(Capsule())
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 25)
+                                .stroke(Color(red: 0.0, green: 0.3, blue: 0.0), lineWidth: 2) // إطار أخضر غامق
                         )
                     }
+                    .padding(.top, 20)
+                    
+                    
+                    
+                    
+                    
+                    // MARK: - Basic Level Cards
+                    VStack(alignment: .trailing, spacing: 20) {
+                        Text("بطاقات المستوى الأساسي")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(Color(red: 0.227, green: 0.431, blue: 0.647))
+                            .padding(.trailing)
+                        
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                            StoreCard(title: "Protection", icon: "shield", price: "7500", duration: "2.80s", description: "حماية من إحدى بطاقات الخصم", color: .gray)
+                            StoreCard(title: "+2", icon: "square.on.square", price: "7500", duration: "2.80s", description: "أضف ورقتين إضافية لأحد الأطراف", color: .gray)
+                            StoreCard(title: "Noise", icon: "waveform", price: "7500", duration: "2.80s", description: "تشويش لمدة ١٠ ثواني لأحد الأطراف", color: .gray)
+                            StoreCard(title: "Freeze!", icon: "snowflake", price: "7500", duration: "2.80s", description: "تجميد لمدة ٦ ثواني لأحد الأطراف", color: .gray)
+                            StoreCard(title: "Peek", icon: "eye", price: "10K", duration: "5.80s", description: "استرق النظر قبل الجميع", color: .gray)
+                        }
+                    }
+                    .padding()
+                    
+                    // MARK: - Advanced Level Cards
+                    VStack(alignment: .trailing, spacing: 20) {
+                        Text("بطاقات المستوى المتقدم")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                            .padding(.trailing)
+                        
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                            StoreCard(title: "Protection", icon: "shield.fill", price: "90K", duration: "10s", description: "حماية من أي بطاقة طوال الجولة !", color: .red)
+                            StoreCard(title: "+15", icon: "square.on.square", price: "90K", duration: "10s", description: "أضف 15 ورقة إضافية لأحد الأطراف", color: .blue)
+                            StoreCard(title: "Noise", icon: "waveform", price: "90K", duration: "10s", description: "تشويش لمدة دقيقة لأحد الأطراف", color: .yellow)
+                            StoreCard(title: "Freeze!", icon: "snowflake", price: "90K", duration: "10s", description: "تجميد لمدة ٣٠ ثانية لأحد الأطراف", color: .blue)
+                            StoreCard(title: "👻", icon: "", price: "10K", duration: "5.80s", description: "اكشف عدد البطاقات في يد كل خصم دون رؤية محتواها", color: .cyan)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.black, Color(red: 0.18, green: 0.39, blue: 0.52)]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .cornerRadius(20)
+                    )
                 }
-                .padding()
+                .padding(.bottom, 40)
             }
         }
     }
-}
-
-// MARK: - StoreCard View
-struct StoreCard: View {
-    var index: Int
-    var title: String
-    var icon: String
-    var price: String
-    var duration: String
-    var description: String
-
-    var body: some View {
-        let isBasic = index < 5
-        let bgGradient = LinearGradient(
-            gradient: Gradient(colors: isBasic ? [Color(hex: "#11D1E3"), Color.cyan] : [Color(hex: "#282727"), Color.black]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-
-        VStack(spacing: 14) {
-            // Icon and title
+    
+    
+    // MARK: - StoreCard View
+    struct StoreCard: View {
+        var title: String
+        var icon: String
+        var price: String
+        var duration: String
+        var description: String
+        var color: Color
+        
+        var body: some View {
             VStack(spacing: 8) {
-                if icon != "" {
-                    Image(systemName: icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 60)
-                        .foregroundColor(.white)
-                } else {
-                    Text(title)
-                        .font(.system(size: 50))
-                        .foregroundColor(.white)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.white)
+                        .frame(height: 130)
+                    
+                    VStack(spacing: 6) {
+                        if !icon.isEmpty {
+                            Image(systemName: icon)
+                                .font(.system(size: 30))
+                                .foregroundColor(color)
+                        } else {
+                            Text(title)
+                                .font(.system(size: 30))
+                        }
+                        
+                        Text(title)
+                            .foregroundColor(.black)
+                            .font(.headline)
+                    }
                 }
-
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(.white)
+                
+                HStack(spacing: 4) {
+                    Text(price)
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    
+                    Image(systemName: "creditcard")
+                        .foregroundColor(.yellow)
+                }
+                
+                Text(duration)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                
+                Text(description)
+                    .font(.caption2)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 4)
             }
             .padding()
-            .background(Color.white.opacity(0.2))
+            .background(Color.white.opacity(0.7))
             .cornerRadius(20)
-
-            // Coin price
-            HStack(spacing: 6) {
-                Text(price)
-                    .font(.headline)
-                    .foregroundColor(.black)
-
-                Image("coins")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            .background(Color.yellow)
-            .clipShape(Capsule())
-
-            // Dollar price
-            Text(duration)
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                .background(Color(red: 0.17, green: 0.29, blue: 0.41))
-                .clipShape(Capsule())
-
-            // Description
-            Text(description)
-                .font(.caption)
-                .foregroundColor(.black)
-                .multilineTextAlignment(.center)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.white)
-                .cornerRadius(25)
+            .shadow(radius: 2)
         }
-        .padding()
-        .background(bgGradient)
-        .cornerRadius(30)
-        .shadow(color: .gray.opacity(0.3), radius: 6, x: 0, y: 4)
+    }
+    
+    // MARK: - Preview
+    struct StoreView_Previews: PreviewProvider {
+        static var previews: some View {
+            StoreView()
+        }
     }
 }
-
-// MARK: - Color extension for hex support
-extension Color {
-    init(hex0: String) {
-        let hex0 = hex0.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex0).scanHexInt64(&int)
-        let r = Double((int >> 16) & 0xFF) / 255
-        let g = Double((int >> 8) & 0xFF) / 255
-        let b = Double(int & 0xFF) / 255
-        self.init(red: r, green: g, blue: b)
-    }
-}
-
-// MARK: - Preview
-struct StoreView_Previews: PreviewProvider {
-    static var previews: some View {
-        StoreView()
-    }
-}
-
