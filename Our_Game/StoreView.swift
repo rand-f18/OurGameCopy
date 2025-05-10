@@ -55,11 +55,11 @@ struct StoreView: View {
                             .padding(.trailing)
                         
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                            StoreCard(title: "Protection", imageName: "Group5", price: "7500", dollar: "2.80$", description: "حماية من إحدى بطاقات الخصم", color: .gray)
-                            StoreCard(title: "+2", imageName: "Group4", price: "7500", dollar: "2.80$", description: "أضف ورقتين إضافية لأحد الأطراف", color: .gray)
-                            StoreCard(title: "Noise", imageName: "Group3", price: "7500", dollar: "2.80$", description: "تشويش لمدة ١٠ ثواني لأحد الأطراف", color: .gray)
-                            StoreCard(title: "Freeze!", imageName: "Group2", price: "7500", dollar: "2.80$", description: "تجميد لمدة ٦ ثواني لأحد الأطراف", color: .gray)
-                            StoreCard(title: "Peek", imageName: "Group1", price: "10K", dollar: "5.80$", description: "استرق النظر قبل الجميع", color: .gray)
+                            StoreCard(title: "Protection", imageName: "Group5", price: "7500", dollar: "2.80$", description: "حماية من إحدى بطاقات الخصم", color: .cyan)
+                            StoreCard(title: "+2", imageName: "Group4", price: "7500", dollar: "2.80$", description: "أضف ورقتين إضافية لأحد الأطراف", color: .cyan)
+                            StoreCard(title: "Noise", imageName: "Group3", price: "7500", dollar: "2.80$", description: "تشويش لمدة ١٠ ثواني لأحد الأطراف", color: .cyan)
+                            StoreCard(title: "Freeze!", imageName: "Group2", price: "7500", dollar: "2.80$", description: "تجميد لمدة ٦ ثواني لأحد الأطراف", color: .cyan)
+                            StoreCard(title: "Peek", imageName: "Group1", price: "10K", dollar: "5.80$", description: "استرق النظر قبل الجميع", color: .cyan)
                         }
 
                     }
@@ -76,7 +76,7 @@ struct StoreView: View {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                             StoreCard(title: "Protection", imageName: "Group5", price: "90K", dollar: "10$", description: "حماية من أي بطاقة طوال الجولة !", color: .red)
                             StoreCard(title: "+15", imageName: "Group4", price: "90K", dollar: "10$", description: "أضف 15 ورقة إضافية لأحد الأطراف", color: .blue)
-                            StoreCard(title: "Noise", imageName: "Group3", price: "90K", dollar: "10$", description: "تشويش لمدة دقيقة لأحد الأطراف", color: .yellow)
+                            StoreCard(title: "Noise", imageName: "Group3", price: "90K", dollar: "10$", description: "تشويش لمدة دقيقة لأحد الأطراف", color: .blue)
                             StoreCard(title: "Freeze!", imageName: "Group2", price: "90K", dollar: "10$", description: "تجميد لمدة ٣٠ ثانية لأحد الأطراف", color: .blue)
                             StoreCard(title: "👻", imageName: "Group1", price: "10K", dollar: "5.80$", description: "اكشف عدد البطاقات في يد كل خصم دون رؤية محتواها", color: .cyan)
                         }
@@ -113,7 +113,7 @@ struct StoreView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.white)
-                        .frame(width: 75, height: 80)
+                        .frame(width: 74, height: 80)
                     
                     Image(imageName)
                         .resizable()
@@ -171,10 +171,10 @@ struct StoreView: View {
                 }) {
                     Text("شراء")
                         .font(.footnote)
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 6)
-                        .background(color)
+                        .background(color.blur(radius: 3))
                         .cornerRadius(10)
                 }
             }
