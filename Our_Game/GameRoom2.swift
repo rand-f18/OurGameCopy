@@ -71,19 +71,22 @@ struct GameRoom2: View {
                     Image("ghost").resizable().frame(width: 50, height: 50)
                     ZStack {
                         Circle()
-                            .fill(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)))
+                            .fill(Color(.orange))
                             .stroke(Color.lightBeige, lineWidth: 4)
                             .frame(width: 300, height: 255)
                             .padding(.bottom,80)
-                            .padding(.top,5).overlay(                        LazyVGrid(columns: columns, spacing: 5) {
-                                ForEach(allElements.shuffled().prefix(6), id: \.self) { element in
+                            .padding(.top,5)
+                        
+                        Circle().fill(Color(.clear)).frame(width: 300, height: 255).overlay{
+                            LazyVGrid(columns: columns, spacing: 2) {
+                                ForEach(allElements.shuffled().prefix(10), id: \.self) { element in
                                     Image(element)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 60, height: 60)
+                                        .frame(width: 50, height: 50)
                                 }
-                            }.frame(width: 200,height: 255).clipShape(Circle()))
-                        
+                            }.frame(width: 200,height: 230)
+                        }.padding(.bottom,65)
                         Text("Fai")
                             .font(.system(size: 26, weight:.regular, design: .rounded))
                             .foregroundColor(Color.white)
