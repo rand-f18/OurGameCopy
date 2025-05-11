@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct PlayerModel:Identifiable{
     var id:UUID
     var Nickname:String
     var score:Int
     var rank:Int
+    var color:Color
     var myCards:[ActionCardModel]
     var shabohi: Int
 }

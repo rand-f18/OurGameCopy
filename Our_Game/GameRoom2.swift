@@ -11,6 +11,15 @@ import SwiftUI
 struct GameRoom2: View {
     let allElements = ["Camal", "Kabba", "man", "Dallah", "dates", "Desert", "Falcon", "Gecko", "metro", "Misbaha", "plam", "Riyal"]
     
+    @ObservedObject var viewModel = ActionCardViewModel()
+    var freezeCard: ActionCardModel
+    var noiseCard: ActionCardModel
+
+    init(viewModel: ActionCardViewModel) {
+        self.freezeCard = viewModel.createFreezeCard()
+        self.noiseCard = viewModel.createNoiseCard()
+    }
+    
     let columns = [
         GridItem(.flexible()),  // أول عمود مرن
         GridItem(.flexible()),  // ثاني عمود مرن
@@ -59,33 +68,40 @@ struct GameRoom2: View {
                 }.frame(width:280, height:470)
                 
                 HStack {
-                    ZStack {
-                        Circle()
-                            .fill(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)))
-                            .stroke(Color.lightBeige, lineWidth: 4)
-                            .frame(width: 550, height: 255)
-                            .padding(.bottom,80)
-                            .padding(.top,5)
-                        
-                        // Text "Fai" في أعلى الدائرة
-                        Text("Fai")
-                            .font(.system(size: 26, weight:.regular, design: .rounded))
-                            .foregroundColor(Color.white)
-                            .padding(.bottom,290)
-                        
-                        // عرض 6 صور عشوائيًا داخل الدائرة
-                        LazyVGrid(columns: columns, spacing: 40) {
-                            ForEach(allElements.shuffled().prefix(6), id: \.self) { element in  // عرض أول 6 صور فقط عشوائيًا
-                                Image(element)  // افترض أن الصور موجودة في أصول المشروع
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
+//                    ZStack {
+//                        Circle()
+//                            .fill(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)))
+//                            .stroke(Color.lightBeige, lineWidth: 4)
+//                            .frame(width: 550, height: 255)
+//                            .padding(.bottom,80)
+//                            .padding(.top,5).overlay(                        LazyVGrid(columns: columns, spacing: 5) {
+//                                ForEach(allElements.shuffled().prefix(6), id: \.self) { element in
+//                                    Image(element)
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 60, height: 60)
+//                                }
+//                            }.frame(width: 200,height: 255).clipShape(Circle()))
+//                        
+//                        Text("Fai")
+//                            .font(.system(size: 26, weight:.regular, design: .rounded))
+//                            .foregroundColor(Color.white)
+//                            .padding(.bottom,290)
+//                    }
+                    
+                    VStack(spacing:10){
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 8).fill(Color(.systemGray6)).stroke(freezeCard.color, lineWidth: 4).frame(width: 50,height: 65)
+                            VStack{
+                                Image(systemName: freezeCard.icon).resizable().frame(width: 30, height: 30).foregroundStyle(.blue)
+                                Text(freezeCard.name).font(.system(size: 13, weight:.regular, design: .rounded)).foregroundStyle(.blue)
                             }
-                        }.frame(width: 190, height: 180)
-                        
+                            
+                        }
+                       
                     }
                 }
-                Spacer()
+               
             }.padding(.bottom,50)
             
             HStack(spacing:260){
@@ -108,5 +124,5 @@ struct GameRoom2: View {
 }
 
 #Preview {
-    GameRoom2()
+    GameRoom2(viewModel: ActionCardViewModel())
 }

@@ -16,3 +16,4 @@ struct ActionCardModel: Identifiable {
     var color: Color
     var price: Double
 }
+
