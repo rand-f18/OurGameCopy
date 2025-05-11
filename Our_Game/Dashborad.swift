@@ -111,7 +111,7 @@ struct DashboardView: View {
                             Button(action: {
                                 print("Ghost tapped")
                             }) {
-                                Image("ghost_4955533 (1)")
+                                Image("ghost")
                                     .resizable()
                                     .frame(width: 40, height: 40)
                             }
