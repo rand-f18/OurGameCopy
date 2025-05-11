@@ -50,7 +50,7 @@ struct DashboardView: View {
                                             endPoint: .trailing
                                         ))
                                         .frame(width: 160, height: 24)
-
+                                    
                                     Text("\(Int(levelPoints)) / \(Int(maxPoints))")
                                         .font(.caption)
                                         .bold()
@@ -80,9 +80,16 @@ struct DashboardView: View {
                     
                     Spacer()
                     
-                    VStack(spacing: 8) {
+                    VStack(spacing: 5) {
                         // الكارد والمتجر في نفس المستوى
                         HStack(spacing: 12) {
+                            Button(action: {
+                                print("Winner tapped")
+                            }) {
+                                Image("winner")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            }
                             Button(action: {
                                 print("Card tapped")
                             }) {
@@ -90,51 +97,51 @@ struct DashboardView: View {
                                     .resizable()
                                     .frame(width: 40, height: 40)
                             }
-                            
-                            VStack(spacing: 5) {
-                                Button(action: {
-                                    print("Store tapped")
-                                }) {
-                                    Image("store_869636")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                }
-
-                                Button(action: {
-                                    print("Ghost tapped")
-                                }) {
-                                    Image("ghost_4955533 (1)")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                }
-
-                                Text("0")
-                                    .foregroundColor(.white)
+                            Button(action: {
+                                print("store tapped")
+                            }) {
+                                Image("store_869636")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
                             }
                         }
                         
                         // زر تعليم كيفية اللعب
-                        Button(action: {
-                            showHelpSheet = true
-                        }) {
-                            HStack(spacing: 4) {
-                                Text("تعلم كيفية اللعب")
-                                    .foregroundColor(.yellow)
-                                    .font(.footnote)
-                                    .lineLimit(1)
-                                
-                                Image(systemName: "questionmark.circle.fill")
-                                    .foregroundColor(.yellow)
-                                    .font(.footnote)
+                        VStack(spacing: 5) {
+                            Button(action: {
+                                print("Ghost tapped")
+                            }) {
+                                Image("ghost")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
                             }
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 4)
-                            .background(Color.cyan.opacity(0.3))
-                            .cornerRadius(8)
+
+                            Text("0")
+                                .foregroundColor(.white)
                         }
-                        .frame(width: 140, alignment: .trailing)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding()
+                            Button(action: {
+                                showHelpSheet = true
+                            }) {
+                                HStack(spacing: 4) {
+                                    Text("تعلم كيفية اللعب")
+                                        .foregroundColor(.yellow)
+                                        .font(.footnote)
+                                        .lineLimit(1)
+                                    
+                                    Image(systemName: "questionmark.circle.fill")
+                                        .foregroundColor(.yellow)
+                                        .font(.footnote)
+                                }
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 4)
+                                .background(Color.cyan.opacity(0.3))
+                                .cornerRadius(8)
+                            }
+                            .frame(width: 140, alignment: .trailing)
+                        }
                     }
-                }
                 .padding(.horizontal)
                 
                 Spacer()
