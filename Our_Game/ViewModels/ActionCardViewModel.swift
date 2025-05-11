@@ -21,14 +21,15 @@ class ActionCardViewModel: ObservableObject {
         )
     }
     
+    
     // دالة لإنشاء كارد "Noise"
     func createNoiseCard() -> ActionCardModel {
         return ActionCardModel(
             id: UUID(),
             description: "Make a noise to distract your opponent",
-            icon: "noise", // اسم الأيقونة
+            icon: "lightspectrum.horizontal", // اسم الأيقونة
             name: "Noise", // اسم الكارد
-            color: .orange,   // اللون البرتقالي
+            color: .yellow,
             price: 15.0      // السعر
         )
     }

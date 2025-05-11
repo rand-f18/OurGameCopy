@@ -67,27 +67,28 @@ struct GameRoom2: View {
                     
                 }.frame(width:280, height:470)
                 
-                HStack {
-//                    ZStack {
-//                        Circle()
-//                            .fill(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)))
-//                            .stroke(Color.lightBeige, lineWidth: 4)
-//                            .frame(width: 550, height: 255)
-//                            .padding(.bottom,80)
-//                            .padding(.top,5).overlay(                        LazyVGrid(columns: columns, spacing: 5) {
-//                                ForEach(allElements.shuffled().prefix(6), id: \.self) { element in
-//                                    Image(element)
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 60, height: 60)
-//                                }
-//                            }.frame(width: 200,height: 255).clipShape(Circle()))
-//                        
-//                        Text("Fai")
-//                            .font(.system(size: 26, weight:.regular, design: .rounded))
-//                            .foregroundColor(Color.white)
-//                            .padding(.bottom,290)
-//                    }
+                HStack(spacing: 0){
+                    Image("ghost").resizable().frame(width: 50, height: 50)
+                    ZStack {
+                        Circle()
+                            .fill(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)))
+                            .stroke(Color.lightBeige, lineWidth: 4)
+                            .frame(width: 300, height: 255)
+                            .padding(.bottom,80)
+                            .padding(.top,5).overlay(                        LazyVGrid(columns: columns, spacing: 5) {
+                                ForEach(allElements.shuffled().prefix(6), id: \.self) { element in
+                                    Image(element)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60, height: 60)
+                                }
+                            }.frame(width: 200,height: 255).clipShape(Circle()))
+                        
+                        Text("Fai")
+                            .font(.system(size: 26, weight:.regular, design: .rounded))
+                            .foregroundColor(Color.white)
+                            .padding(.bottom,290)
+                    }.frame(width:275)
                     
                     VStack(spacing:10){
                         ZStack{
@@ -96,11 +97,18 @@ struct GameRoom2: View {
                                 Image(systemName: freezeCard.icon).resizable().frame(width: 30, height: 30).foregroundStyle(.blue)
                                 Text(freezeCard.name).font(.system(size: 13, weight:.regular, design: .rounded)).foregroundStyle(.blue)
                             }
-                            
+                        }
+                        
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 8).fill(Color(.systemGray6)).stroke(noiseCard.color, lineWidth: 4).frame(width: 50,height: 65)
+                            VStack{
+                                Image(systemName: noiseCard.icon).resizable().frame(width: 30, height: 30).foregroundStyle(.orange)
+                                Text(noiseCard.name).font(.system(size: 13, weight:.regular, design: .rounded)).foregroundStyle(.orange)
+                            }
                         }
                        
-                    }
-                }
+                    }.padding(.bottom,55).padding(.leading,5)
+                }.frame(width:390)
                
             }.padding(.bottom,50)
             
