@@ -97,12 +97,21 @@ struct LeaderBoard: View {
                             VStack(spacing: 10) {
                                 ForEach(players.filter { $0.rank >= 4 && $0.rank <= 10 }) { player in
                                     HStack {
-                                        Image("rank")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 50, height: 50)
-                                            .padding(.leading, 10)
+                                        // ✅ صورة الرانك وفي وسطها رقم المتغير
+                                        ZStack {
+    Image("rank")
+        .resizable()
+        .scaledToFit()
+        .frame(width: 50, height: 50)
 
+    Text("1")
+        .foregroundColor(.black)
+        .font(.system(size: 20))
+        .offset(y: -4)
+}
+                                        .padding(.leading, 10)
+
+                                        // اسم اللاعب
                                         Text(player.name ?? "الجوهرة")
                                             .font(.headline)
                                             .foregroundColor(.black)
@@ -110,6 +119,7 @@ struct LeaderBoard: View {
 
                                         Spacer()
 
+                                        // المربع اللي فيه الترتيب أيضاً (ممكن تزيله لو صار مكرر)
                                         ZStack {
                                             RoundedRectangle(cornerRadius: 15)
                                                 .fill(Color.orangeBlock)
@@ -152,9 +162,8 @@ struct LeaderBoard: View {
 
     func columnBlock(height: CGFloat, rank: String) -> some View {
         VStack(spacing: 0) {
-            // ✅ المربع فوق العمود
             Rectangle()
-                .fill(Color.red) // بإمكانك تغييره لأي لون تبينه
+                .fill(Color.red)
                 .frame(width: 110, height: 3)
 
             ZStack(alignment: .top) {
