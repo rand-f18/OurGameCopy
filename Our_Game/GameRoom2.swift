@@ -5,7 +5,6 @@
 //  Created by Fai Alharthi on 10/11/1446 AH.
 //
 
-
 import SwiftUI
 
 struct GameRoom2: View {

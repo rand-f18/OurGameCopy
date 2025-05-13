@@ -125,7 +125,7 @@ struct DashboardView: View {
                                 showHelpSheet = true
                             }) {
                                 HStack(spacing: 4) {
-                                    Text("تعلم كيفية اللعب")
+                                    Text("تعلم اللعب")
                                         .foregroundColor(.yellow)
                                         .font(.footnote)
                                         .lineLimit(1)
