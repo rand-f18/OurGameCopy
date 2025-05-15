@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DashboardView: View {
-
+    @ObservedObject var matchManager: MatchManager
     @State private var levelPoints: Double = 250
     private let maxPoints: Double = 500
 
@@ -147,8 +147,10 @@ struct DashboardView: View {
                     .padding(.horizontal)
 
                     Spacer()
+                 
 
                     VStack(spacing: -19) {
+                        
                         Image("Preview")
                             .resizable()
                             .scaledToFit()
@@ -156,23 +158,41 @@ struct DashboardView: View {
                             .cornerRadius(20)
 
                         Button(action: {
-                            print("Start Game tapped")
+                            print("✅ Start button tapped")
+                            matchManager.startMatchmaking()
                         }) {
-                            Text("إبدأ اللعب !")
-                                .font(.title2)
-                                .bold(true)
-                                .foregroundColor(.red)
+                            ZStack {
+                                // Outline (black)
+                                Text("ابدأ اللعب !")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(.black)
+                                    .offset(x: 1, y: 1) // يمكنك تعديل هذه القيم لزيادة سُمك الحدود
+
+                                Text("ابدأ اللعب !")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundColor(.red)
+                            }
                                 .frame(width: 330, height: 25)
                                 .padding()
-                                .background(Color.yellow)
-                                .cornerRadius(25)
+                                .background(
+                                    Capsule()
+                                        .fill(matchManager.authenticationState != .authenticated || matchManager.inGame ?
+                                              Color.gray : Color.yellow)
+                                )
                         }
+                        .disabled(matchManager.authenticationState != .authenticated || matchManager.inGame)
+                     
                     }
-
+                    Text(matchManager.authenticationState.rawValue)
+                        .font(.headline.weight(.bold))
+                        .foregroundColor(.secondary)
                     // ✅ NavigationLink hidden + button
                     NavigationLink(destination: ContentView1(), isActive: $navigateToPrivateRoom) {
                         EmptyView()
                     }
+                    .padding()
 
                     Button(action: {
                         navigateToPrivateRoom = true
@@ -261,6 +281,6 @@ struct DashboardView: View {
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardView()
+        DashboardView(matchManager : MatchManager())
     }
 }

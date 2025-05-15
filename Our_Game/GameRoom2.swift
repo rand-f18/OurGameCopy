@@ -7,7 +7,11 @@
 
 import SwiftUI
 
+var countDownTimer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
 struct GameRoom2: View {
+    
+    @Environment(\.dismiss) var dismiss
     let allElements = [
         "Camal", "Kabba", "man", "Dallah", "dates", "Desert",
         "Falcon", "Gecko", "metro", "Misbaha", "plam", "Riyal",
@@ -53,10 +57,14 @@ struct GameRoom2: View {
                                 .fill(Color(.lightBeige))
                                 .stroke(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)), lineWidth: 4)
                                 .frame(width: 50, height: 50)
-                            Image(systemName: "door.right.hand.open")
-                                .resizable()
-                                .frame(width: 22, height: 30)
-                                .foregroundColor(.red)
+                            Button(action: {
+                                dismiss()
+                            }) {
+                                Image(systemName: "door.right.hand.open")
+                                    .resizable()
+                                    .frame(width: 22, height: 30)
+                                    .foregroundColor(.red)
+                            }
                         }
                         .frame(height: 35)
                         .padding(.top, 120)

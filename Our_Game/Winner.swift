@@ -3,6 +3,9 @@
 import SwiftUI
 
 struct WinnerView: View {
+  
+   @ObservedObject var matchmanager : MatchManager
+    //fix scores to be taken from matchmanager.score for each player
     struct Player: Identifiable {
         let id = UUID()
         let name: String
@@ -18,6 +21,7 @@ struct WinnerView: View {
     ]
 
     var body: some View {
+      
         ZStack {
             RadialGradient(gradient: Gradient(colors: [Color(hex: "07A5C3"), Color(hex: "2F6386")]), center: .center, startRadius: 100, endRadius: 470)
                 .ignoresSafeArea()
@@ -200,7 +204,9 @@ struct WinnerView: View {
         }
     }
 }
-
-#Preview {
-    WinnerView()
+struct WinnerView_Previews: PreviewProvider {
+    static var previews: some View {
+        WinnerView(matchmanager : MatchManager())
+    }
 }
+

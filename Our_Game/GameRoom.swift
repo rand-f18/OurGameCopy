@@ -1,7 +1,9 @@
 import SwiftUI
 
+var countDownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
 struct GameRoom: View {
-    
+    @ObservedObject var matchManager: MatchManager
     let allElements = ["Camal", "Kabba", "man", "Dallah", "dates", "Desert", "Falcon", "Gecko", "metro", "Misbaha", "plam", "Riyal"]
 
     @State private var centerCard: [String] = []
@@ -10,6 +12,7 @@ struct GameRoom: View {
     @State private var centerCardOwner: String? = nil // من فاز بالجولة الحالية
 
     var body: some View {
+       
         ZStack {
             RadialGradient(
                 gradient: Gradient(colors: [.centerColor, .edgeColor]),
@@ -155,6 +158,8 @@ struct GridView: View {
     }
 }
 
-#Preview {
-    GameRoom()
+struct GameRoom_Previews: PreviewProvider {
+    static var previews: some View {
+        GameRoom(matchManager : MatchManager())
+    }
 }

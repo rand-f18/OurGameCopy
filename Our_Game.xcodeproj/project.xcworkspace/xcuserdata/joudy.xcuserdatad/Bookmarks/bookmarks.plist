@@ -3,6 +3,52 @@
 <plist version="1.0">
 <dict>
 	<key>top-level-items</key>
+<<<<<<< HEAD
 	<array/>
+=======
+	<array>
+		<dict>
+			<key>destination</key>
+			<dict>
+				<key>location-parameters</key>
+				<dict>
+					<key>XcodeLocation</key>
+					<string>{"ExpandTranscript":true,"IndexPath":[2,5,0]}</string>
+				</dict>
+				<key>rebasable-url</key>
+				<dict>
+					<key>payload</key>
+					<string>x-xcode-log://0EEDE7FC-8D18-49F0-A803-BA50EB4B1524</string>
+				</dict>
+				<key>scheme</key>
+				<string>x-xcode-log</string>
+				<key>type</key>
+				<string>IDELogDocumentLocation</string>
+			</dict>
+			<key>title</key>
+			<string>Error: Build input file cannot be found: '/Users/joudy/Desktop/Our_Game/Our_Game/Our_Game.entitlements'. Did you forget to declare this file as an output of a script phase or custom build rule which produces it?</string>
+			<key>type</key>
+			<string>bookmark</string>
+		</dict>
+		<dict>
+			<key>destination</key>
+			<dict>
+				<key>rebasable-url</key>
+				<dict>
+					<key>payload</key>
+					<string>x-xcode-log://0EEDE7FC-8D18-49F0-A803-BA50EB4B1524</string>
+				</dict>
+				<key>scheme</key>
+				<string>x-xcode-log</string>
+				<key>type</key>
+				<string>DVTDocumentLocation</string>
+			</dict>
+			<key>title</key>
+			<string>Bookmark “Build (Automatic) Our_Game - Log”</string>
+			<key>type</key>
+			<string>bookmark</string>
+		</dict>
+	</array>
+>>>>>>> joud_branch
 </dict>
 </plist>

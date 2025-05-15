@@ -1,24 +1,29 @@
-//
-//  ContentView.swift
-//  Our_Game
-//
-//  Created by Joud Abdullah AlAmri on 5/1/25.
-//
-
 import SwiftUI
+import GameKit
 
 struct ContentView: View {
+    @StateObject var matchManager = MatchManager()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world")
+        ZStack {
+            if matchManager.isGameOver {
+                WinnerView(matchmanager: matchManager)
+            } else if matchManager.inGame {
+                GameRoom(matchManager: matchManager)
+            } else {
+                DashboardView(matchManager: matchManager)
+            }
         }
-        .padding()
+        .onAppear {
+            print("🟢 onAppear triggered")
+            matchManager.authenticateUser()
+         }
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
+
