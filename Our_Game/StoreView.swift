@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct StoreView: View {
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         ZStack {
             // Yellow gradient background
@@ -13,9 +15,22 @@ struct StoreView: View {
             
             ScrollView {
                 VStack(spacing: 10) {
-                    Text("متجر عين")
-                        .font(.system(size: 36, weight: .bold))
-                        .foregroundColor(Color(red: 0.227, green: 0.431, blue: 0.647))
+                    HStack{
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .resizable()
+                                .bold()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.white)
+                                .padding(.trailing, 85)
+                        }
+                        Text("متجر عين")
+                            .font(.system(size: 36, weight: .bold))
+                            .foregroundColor(Color(red: 0.227, green: 0.431, blue: 0.647))
+                    }.padding(.trailing, 110)
                     HStack {
                         Spacer() // يدفع المحتوى إلى اليمين
                         
@@ -39,7 +54,7 @@ struct StoreView: View {
                             RoundedRectangle(cornerRadius: 25)
                                 .stroke(Color(red: 0.0, green: 0.3, blue: 0.0), lineWidth: 2) // إطار أخضر غامق
                         )
-                    }
+                    }.padding(.horizontal, 20)
                     .padding(.top, 20)
                     
                     
@@ -74,7 +89,7 @@ struct StoreView: View {
                             .padding(.trailing)
                         
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                            StoreCard(title: "Protection", imageName: "Group5", price: "90K", dollar: "10$", description: "حماية من أي بطاقة طوال الجولة !", color: .red)
+                            StoreCard(title: "Protection", imageName: "Group5", price: "90K", dollar: "10$", description: "حماية من أي بطاقة طوال الجولة !", color: .blue)
                             StoreCard(title: "+15", imageName: "Group4", price: "90K", dollar: "10$", description: "أضف 15 ورقة إضافية لأحد الأطراف", color: .blue)
                             StoreCard(title: "Noise", imageName: "Group3", price: "90K", dollar: "10$", description: "تشويش لمدة دقيقة لأحد الأطراف", color: .blue)
                             StoreCard(title: "Freeze!", imageName: "Group2", price: "90K", dollar: "10$", description: "تجميد لمدة ٣٠ ثانية لأحد الأطراف", color: .blue)
@@ -94,7 +109,7 @@ struct StoreView: View {
                 }
                 .padding(.bottom, 40)
             }
-        }
+        }.navigationBarHidden(true)
     }
     
     

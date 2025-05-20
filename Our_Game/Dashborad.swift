@@ -85,27 +85,40 @@ struct DashboardView: View {
                         VStack(spacing: 5) {
                             // الكارد والمتجر في نفس المستوى
                             HStack(spacing: 12) {
-                                Button(action: {
-                                    print("Winner tapped")
-                                }) {
+                                NavigationLink(destination: LeaderBoard()) {
                                     Image("winner")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
+.resizable()
+.frame(width: 40, height: 40)
                                 }
-                                Button(action: {
-                                    print("Card tapped")
-                                }) {
+//                                Button(action: {
+//                                    print("Winner tapped")
+//                                }) {
+//                                    Image("winner")
+//                                        .resizable()
+//                                        .frame(width: 40, height: 40)
+//                                }
+//                                Button(action: {
+//                                    print("Card tapped")
+//                                }) {
+                                NavigationLink(destination: MyCardsView()) {
                                     Image("card_16271793")
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                 }
-                                Button(action: {
-                                    print("store tapped")
-                                }) {
+                                  
+                                //}
+                                NavigationLink(destination: StoreView()) {
                                     Image("store_869636")
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                 }
+//                                Button(action: {
+//                                    print("store tapped")
+//                                }) {
+//                                    Image("store_869636")
+//                                        .resizable()
+//                                        .frame(width: 40, height: 40)
+//                                }
                             }
 
                             // زر تعليم كيفية اللعب
@@ -247,7 +260,7 @@ struct DashboardView: View {
                     }
                 )
             }
-        }
+        }.navigationBarBackButtonHidden(true)
     }
 
     func helpPage(index: Int) -> some View {
