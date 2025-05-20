@@ -109,20 +109,21 @@ struct DashboardView: View {
                             }
 
                             // زر تعليم كيفية اللعب
-                            VStack(spacing: 5) {
-                                Button(action: {
-                                    print("Ghost tapped")
-                                }) {
-                                    Image("ghost")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                }
-
-                                Text("0")
-                                    .foregroundColor(.white)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding()
+//                            VStack(spacing: 5) {
+//                                Button(action: {
+//                                    print("Ghost tapped")
+//                                }) {
+//                                    Image("ghost")
+//                                        .resizable()
+//                                        .frame(width: 40, height: 40)
+//                                }
+//
+//                                Text("0")
+//                                    .foregroundColor(.white)
+//                            }
+//                            .frame(maxWidth: .infinity, alignment: .trailing)
+//                            .padding()
+                            
                             Button(action: {
                                 showHelpSheet = true
                             }) {
@@ -136,10 +137,11 @@ struct DashboardView: View {
                                         .foregroundColor(.yellow)
                                         .font(.footnote)
                                 }
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 4)
+                                .padding(.horizontal, 10)
                                 .background(Color.cyan.opacity(0.3))
                                 .cornerRadius(8)
+                                .padding(.top, 35)
+
                             }
                             .frame(width: 140, alignment: .trailing)
                         }
@@ -194,17 +196,17 @@ struct DashboardView: View {
                     }
                     .padding()
 
-                    Button(action: {
-                        navigateToPrivateRoom = true
-                    }) {
-                        Text("أنشئ غرفة خاصة")
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 10)
-                            .background(Color(#colorLiteral(red: 0.0, green: 0.741, blue: 0.839, alpha: 1)))
-                            .cornerRadius(30)
-                    }
-                    .padding(.horizontal, 30)
+//                    Button(action: {
+//                        navigateToPrivateRoom = true
+//                    }) {
+//                        Text("أنشئ غرفة خاصة")
+//                            .foregroundColor(.white)
+//                            .padding(.horizontal, 40)
+//                            .padding(.vertical, 10)
+//                            .background(Color(#colorLiteral(red: 0.0, green: 0.741, blue: 0.839, alpha: 1)))
+//                            .cornerRadius(30)
+//                    }
+//                    .padding(.horizontal, 30)
 
                     Spacer()
                 }

@@ -127,9 +127,9 @@ struct GameRoom2: View {
 
                 // كرت المركز
                 HStack(spacing: 0) {
-                    Image("ghost")
-                        .resizable()
-                        .frame(width: 50, height: 50)
+//                    Image("ghost")
+//                        .resizable()
+//                        .frame(width: 50, height: 50)
 
                     ZStack {
                         Circle()
@@ -140,9 +140,9 @@ struct GameRoom2: View {
                             .padding(.top, 5)
 
                         Circle().fill(Color.clear)
-                            .frame(width: 300, height: 255)
+                            .frame(width: 290, height: 255)
                             .overlay {
-                                LazyVGrid(columns: columns, spacing: 6) {
+                                LazyVGrid(columns: columns, spacing: 5) {
                                     ForEach(centerCard, id: \.self) { element in
                                         let randomSize: CGFloat = CGFloat(Int.random(in: 45...60))
                                         let rotationAngle: Double = Double.random(in: -10...10)
@@ -169,8 +169,7 @@ struct GameRoom2: View {
                                     }
                                 }
                                 .frame(width: 230, height: 220)
-                            }
-                            .padding(.bottom, 65)
+                            }.padding(.bottom, 65)
 
                         Text("Fai")
                             .font(.system(size: 26, weight: .regular, design: .rounded))
@@ -180,43 +179,43 @@ struct GameRoom2: View {
                     .frame(width: 275)
 
                     // بطاقات الأكشن
-                    VStack(spacing: 10) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color(.systemGray6))
-                                .stroke(freezeCard.color, lineWidth: 4)
-                                .frame(width: 50, height: 65)
-
-                            VStack {
-                                Image(systemName: freezeCard.icon)
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(.blue)
-
-                                Text(freezeCard.name)
-                                    .font(.system(size: 13, weight: .regular, design: .rounded))
-                                    .foregroundStyle(.blue)
-                            }
-                        }
-
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color(.systemGray6))
-                                .stroke(noiseCard.color, lineWidth: 4)
-                                .frame(width: 50, height: 65)
-
-                            VStack {
-                                Image(systemName: noiseCard.icon)
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(.orange)
-
-                                Text(noiseCard.name)
-                                    .font(.system(size: 13, weight: .regular, design: .rounded))
-                                    .foregroundStyle(.orange)
-                            }
-                        }
-                    }
+//                    VStack(spacing: 10) {
+//                        ZStack {
+//                            RoundedRectangle(cornerRadius: 8)
+//                                .fill(Color(.systemGray6))
+//                                .stroke(freezeCard.color, lineWidth: 4)
+//                                .frame(width: 50, height: 65)
+//
+//                            VStack {
+//                                Image(systemName: freezeCard.icon)
+//                                    .resizable()
+//                                    .frame(width: 30, height: 30)
+//                                    .foregroundStyle(.blue)
+//
+//                                Text(freezeCard.name)
+//                                    .font(.system(size: 13, weight: .regular, design: .rounded))
+//                                    .foregroundStyle(.blue)
+//                            }
+//                        }
+//
+//                        ZStack {
+//                            RoundedRectangle(cornerRadius: 8)
+//                                .fill(Color(.systemGray6))
+//                                .stroke(noiseCard.color, lineWidth: 4)
+//                                .frame(width: 50, height: 65)
+//
+//                            VStack {
+//                                Image(systemName: noiseCard.icon)
+//                                    .resizable()
+//                                    .frame(width: 30, height: 30)
+//                                    .foregroundStyle(.orange)
+//
+//                                Text(noiseCard.name)
+//                                    .font(.system(size: 13, weight: .regular, design: .rounded))
+//                                    .foregroundStyle(.orange)
+//                            }
+//                        }
+//                    }
                     .padding(.bottom, 55)
                     .padding(.leading, 5)
                 }
