@@ -28,6 +28,9 @@ struct GameRoom2: View {
     @State private var selectedPlayerElement: String? = nil
     @State private var selectedCenterElement: String? = nil
 
+    @State private var showExitConfirmation = false // عرض نافذة التأكيد
+    @State private var navigateToDashboard = false
+
     init(viewModel: ActionCardViewModel) {
         self.freezeCard = viewModel.createFreezeCard()
         self.noiseCard = viewModel.createNoiseCard()
@@ -50,6 +53,11 @@ struct GameRoom2: View {
             .ignoresSafeArea()
 
             VStack {
+                // NavigationLink لاستخدامه عند الضغط على "خروج"
+                NavigationLink(destination: DashboardView(matchManager: MatchManager()), isActive: $navigateToDashboard) {
+                    EmptyView() // لا حاجة لعرض شيء هنا
+                }
+
                 HStack(spacing: 0) {
                     VStack {
                         ZStack {
@@ -58,7 +66,7 @@ struct GameRoom2: View {
                                 .stroke(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)), lineWidth: 4)
                                 .frame(width: 50, height: 50)
                             Button(action: {
-                                dismiss()
+                                showExitConfirmation = true // عرض نافذة التأكيد
                             }) {
                                 Image(systemName: "door.right.hand.open")
                                     .resizable()
@@ -101,12 +109,12 @@ struct GameRoom2: View {
                         .frame(width: 280, height: 470)
                         .padding(.vertical, 5)
 
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 5), spacing: 12) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 20) {
                         ForEach(playerCard, id: \.self) { element in
                             Image(element)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 60, height: 60)
+                                .frame(width: 80, height: 80) // زيادة الحجم هنا
                                 .padding(4)
                                 .background(
                                     selectedPlayerElement == element && selectedCenterElement == element ?
@@ -120,18 +128,14 @@ struct GameRoom2: View {
                                 }
                         }
                     }
-                    .padding(.top, 10)
+                    .padding(.top, 15)
                     .padding(.horizontal, 8)
-                }
-                .frame(width: 280, height: 470)
+                }.frame(width: 280, height: 470)
 
                 // كرت المركز
                 HStack(spacing: 0) {
-//                    Image("ghost")
-//                        .resizable()
-//                        .frame(width: 50, height: 50)
-
                     ZStack {
+
                         Circle()
                             .fill(Color.orange)
                             .stroke(Color.lightBeige, lineWidth: 4)
@@ -177,47 +181,6 @@ struct GameRoom2: View {
                             .padding(.bottom, 290)
                     }
                     .frame(width: 275)
-
-                    // بطاقات الأكشن
-//                    VStack(spacing: 10) {
-//                        ZStack {
-//                            RoundedRectangle(cornerRadius: 8)
-//                                .fill(Color(.systemGray6))
-//                                .stroke(freezeCard.color, lineWidth: 4)
-//                                .frame(width: 50, height: 65)
-//
-//                            VStack {
-//                                Image(systemName: freezeCard.icon)
-//                                    .resizable()
-//                                    .frame(width: 30, height: 30)
-//                                    .foregroundStyle(.blue)
-//
-//                                Text(freezeCard.name)
-//                                    .font(.system(size: 13, weight: .regular, design: .rounded))
-//                                    .foregroundStyle(.blue)
-//                            }
-//                        }
-//
-//                        ZStack {
-//                            RoundedRectangle(cornerRadius: 8)
-//                                .fill(Color(.systemGray6))
-//                                .stroke(noiseCard.color, lineWidth: 4)
-//                                .frame(width: 50, height: 65)
-//
-//                            VStack {
-//                                Image(systemName: noiseCard.icon)
-//                                    .resizable()
-//                                    .frame(width: 30, height: 30)
-//                                    .foregroundStyle(.orange)
-//
-//                                Text(noiseCard.name)
-//                                    .font(.system(size: 13, weight: .regular, design: .rounded))
-//                                    .foregroundStyle(.orange)
-//                            }
-//                        }
-//                    }
-                    .padding(.bottom, 55)
-                    .padding(.leading, 5)
                 }
                 .frame(width: 390)
             }
@@ -252,6 +215,19 @@ struct GameRoom2: View {
                 }
             }
             .padding(.bottom, 90)
+        }
+        .alert(isPresented: $showExitConfirmation) {
+            Alert(
+                title: Text("هل أنت متأكد؟"),
+                message: Text("هل تريد الخروج من اللعبة؟"),
+                primaryButton: .destructive(Text("خروج")) {
+                    // عند الضغط على "خروج"، قم بتعيين navigateToDashboard إلى true للتنقل
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // تأخير صغير للتأكد من إغلاق التنبيه أولاً
+                        navigateToDashboard = true
+                    }
+                },
+                secondaryButton: .cancel() // إلغاء الخروج
+            )
         }
         .onAppear {
             let cards = generateCards(allElements: allElements)
