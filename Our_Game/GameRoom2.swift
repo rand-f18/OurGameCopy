@@ -9,8 +9,18 @@ import SwiftUI
 
 var countDownTimer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
+// struct لحفظ خصائص كل عنصر في الكروت
+struct PositionedImage: Identifiable {
+    let id = UUID()
+    let name: String
+    let size: CGFloat
+    let rotation: Double
+    let offsetX: CGFloat
+    let offsetY: CGFloat
+}
+
 struct GameRoom2: View {
-    
+
     @Environment(\.dismiss) var dismiss
     let allElements = [
         "Camal", "Kabba", "man", "Dallah", "dates", "Desert",
@@ -22,13 +32,13 @@ struct GameRoom2: View {
     var freezeCard: ActionCardModel
     var noiseCard: ActionCardModel
 
-    @State private var playerCard: [String] = []
-    @State private var centerCard: [String] = []
+    @State private var playerCard: [PositionedImage] = []
+    @State private var centerCard: [PositionedImage] = []
 
     @State private var selectedPlayerElement: String? = nil
     @State private var selectedCenterElement: String? = nil
 
-    @State private var showExitConfirmation = false // عرض نافذة التأكيد
+    @State private var showExitConfirmation = false
     @State private var navigateToDashboard = false
 
     init(viewModel: ActionCardViewModel) {
@@ -53,9 +63,8 @@ struct GameRoom2: View {
             .ignoresSafeArea()
 
             VStack {
-                // NavigationLink لاستخدامه عند الضغط على "خروج"
                 NavigationLink(destination: DashboardView(matchManager: MatchManager()), isActive: $navigateToDashboard) {
-                    EmptyView() // لا حاجة لعرض شيء هنا
+                    EmptyView()
                 }
 
                 HStack(spacing: 0) {
@@ -66,7 +75,7 @@ struct GameRoom2: View {
                                 .stroke(Color(#colorLiteral(red: 0.039, green: 0.584, blue: 0.741, alpha: 1)), lineWidth: 4)
                                 .frame(width: 50, height: 50)
                             Button(action: {
-                                showExitConfirmation = true // عرض نافذة التأكيد
+                                showExitConfirmation = true
                             }) {
                                 Image(systemName: "door.right.hand.open")
                                     .resizable()
@@ -110,20 +119,22 @@ struct GameRoom2: View {
                         .padding(.vertical, 5)
 
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 20) {
-                        ForEach(playerCard, id: \.self) { element in
-                            Image(element)
+                        ForEach(playerCard) { element in
+                            Image(element.name)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 80, height: 80) // زيادة الحجم هنا
+                                .frame(width: element.size, height: element.size)
+                                .rotationEffect(.degrees(element.rotation))
+                                .offset(x: element.offsetX, y: element.offsetY)
                                 .padding(4)
                                 .background(
-                                    selectedPlayerElement == element && selectedCenterElement == element ?
+                                    selectedPlayerElement == element.name && selectedCenterElement == element.name ?
                                     Color.green.opacity(0.4) :
-                                    (selectedPlayerElement == element ? Color.blue.opacity(0.3) : Color.clear)
+                                    (selectedPlayerElement == element.name ? Color.blue.opacity(0.3) : Color.clear)
                                 )
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .onTapGesture {
-                                    selectedPlayerElement = element
+                                    selectedPlayerElement = element.name
                                     checkMatch()
                                 }
                         }
@@ -135,7 +146,6 @@ struct GameRoom2: View {
                 // كرت المركز
                 HStack(spacing: 0) {
                     ZStack {
-
                         Circle()
                             .fill(Color.orange)
                             .stroke(Color.lightBeige, lineWidth: 4)
@@ -147,27 +157,22 @@ struct GameRoom2: View {
                             .frame(width: 290, height: 255)
                             .overlay {
                                 LazyVGrid(columns: columns, spacing: 5) {
-                                    ForEach(centerCard, id: \.self) { element in
-                                        let randomSize: CGFloat = CGFloat(Int.random(in: 45...60))
-                                        let rotationAngle: Double = Double.random(in: -10...10)
-                                        let xOffset = CGFloat.random(in: -4...4)
-                                        let yOffset = CGFloat.random(in: -4...4)
-
-                                        Image(element)
+                                    ForEach(centerCard) { element in
+                                        Image(element.name)
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: randomSize, height: randomSize)
-                                            .rotationEffect(.degrees(rotationAngle))
-                                            .offset(x: xOffset, y: yOffset)
+                                            .frame(width: element.size, height: element.size)
+                                            .rotationEffect(.degrees(element.rotation))
+                                            .offset(x: element.offsetX, y: element.offsetY)
                                             .padding(4)
                                             .background(
-                                                selectedPlayerElement == element && selectedCenterElement == element ?
+                                                selectedPlayerElement == element.name && selectedCenterElement == element.name ?
                                                 Color.green.opacity(0.4) :
-                                                (selectedCenterElement == element ? Color.blue.opacity(0.3) : Color.clear)
+                                                (selectedCenterElement == element.name ? Color.blue.opacity(0.3) : Color.clear)
                                             )
                                             .clipShape(RoundedRectangle(cornerRadius: 8))
                                             .onTapGesture {
-                                                selectedCenterElement = element
+                                                selectedCenterElement = element.name
                                                 checkMatch()
                                             }
                                     }
@@ -186,7 +191,6 @@ struct GameRoom2: View {
             }
             .padding(.bottom, 50)
 
-            // لاعبين آخرين
             HStack(spacing: 260) {
                 ZStack {
                     Circle()
@@ -221,12 +225,11 @@ struct GameRoom2: View {
                 title: Text("هل أنت متأكد؟"),
                 message: Text("هل تريد الخروج من اللعبة؟"),
                 primaryButton: .destructive(Text("خروج")) {
-                    // عند الضغط على "خروج"، قم بتعيين navigateToDashboard إلى true للتنقل
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // تأخير صغير للتأكد من إغلاق التنبيه أولاً
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         navigateToDashboard = true
                     }
                 },
-                secondaryButton: .cancel() // إلغاء الخروج
+                secondaryButton: .cancel()
             )
         }
         .onAppear {
@@ -236,7 +239,7 @@ struct GameRoom2: View {
         }
     }
 
-    func generateCards(allElements: [String]) -> (playerCard: [String], centerCard: [String]) {
+    func generateCards(allElements: [String]) -> (playerCard: [PositionedImage], centerCard: [PositionedImage]) {
         let sharedCount = Int.random(in: 1...2)
         let sharedElements = allElements.shuffled().prefix(sharedCount)
         let remainingElements = allElements.filter { !sharedElements.contains($0) }.shuffled()
@@ -244,8 +247,28 @@ struct GameRoom2: View {
         let playerUnique = remainingElements.prefix(10 - sharedCount)
         let centerUnique = remainingElements.dropFirst(10 - sharedCount).prefix(10 - sharedCount)
 
-        let playerCard = Array(sharedElements) + playerUnique
-        let centerCard = Array(sharedElements) + centerUnique
+        let playerCardStrings = Array(sharedElements) + playerUnique
+        let centerCardStrings = Array(sharedElements) + centerUnique
+
+        let playerCard = playerCardStrings.map { name in
+            PositionedImage(
+                name: name,
+                size: CGFloat(Int.random(in: 70...85)),
+                rotation: Double.random(in: -5...5),
+                offsetX: CGFloat.random(in: -3...3),
+                offsetY: CGFloat.random(in: -3...3)
+            )
+        }
+
+        let centerCard = centerCardStrings.map { name in
+            PositionedImage(
+                name: name,
+                size: CGFloat(Int.random(in: 45...60)),
+                rotation: Double.random(in: -10...10),
+                offsetX: CGFloat.random(in: -4...4),
+                offsetY: CGFloat.random(in: -4...4)
+            )
+        }
 
         return (playerCard.shuffled(), centerCard.shuffled())
     }
